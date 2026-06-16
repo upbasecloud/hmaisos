@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Dark anchors (Hero, Depoimentos, Contato, Projeto page) ── */
+  --color-brand-dark: #1A1410;
+  --color-brand-dark-2: #211D19;
+  --color-brand-surface: #211D19;
+  --color-brand-card: #272119;
+
+  /* ── Light backgrounds (main site, most sections) ── */
+  --color-brand-bg: #F5F0E8;
+  --color-brand-bg-alt: #EDE7DA;
+
+  /* ── Text on light backgrounds ── */
+  --color-brand-text: #2C2420;
+  --color-brand-text-2: #7A6E66;
+
+  /* ── Text on dark backgrounds ── */
+  --color-brand-cream: #F0EAE0;
+  --color-brand-muted: #9E9488;
+
+  /* ── Accent — use sparingly (max 5 instances/page) ── */
+  --color-brand-gold: #B8935F;
+  --color-brand-bronze: #B8935F;
+
+  /* ── Dividers ── */
+  --color-brand-line: #DDD7CE;
+  --color-brand-line-dark: #2C2720;
+
+  /* ── Fonts ── */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* ── Typography scale ── */
+  --font-size-display-xl: clamp(3rem, 8vw, 7rem);
+  --line-height-display-xl: 0.93;
+  --letter-spacing-display-xl: -0.03em;
+
+  --font-size-display-lg: clamp(2.25rem, 5vw, 4.25rem);
+  --line-height-display-lg: 0.97;
+  --letter-spacing-display-lg: -0.025em;
+
+  --font-size-display-md: clamp(1.875rem, 3.5vw, 3rem);
+  --line-height-display-md: 1.0;
+  --letter-spacing-display-md: -0.02em;
+
+  --font-size-caption: 0.6875rem;
+  --line-height-caption: 1.5;
+  --letter-spacing-caption: 0.14em;
+
+  /* ── Spacing ── */
+  --spacing-section: 8rem;
+  --spacing-section-sm: 5rem;
+
+  /* ── Section curve ── */
+  --curve: clamp(1.5rem, 4vw, 3rem);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+.skip-nav {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--color-brand-gold);
+  color: var(--color-brand-dark);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-nav:focus { top: 1rem; }
+
+/* Typography utilities */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+
+.text-display-xl {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-xl);
+  line-height: var(--line-height-display-xl);
+  letter-spacing: var(--letter-spacing-display-xl);
+  font-weight: 300;
+}
+
+.text-display-lg {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-lg);
+  line-height: var(--line-height-display-lg);
+  letter-spacing: var(--letter-spacing-display-lg);
+  font-weight: 300;
+}
+
+.text-display-md {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-md);
+  line-height: var(--line-height-display-md);
+  letter-spacing: var(--letter-spacing-display-md);
+  font-weight: 300;
+}
+
+.text-caption {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Container */
+.container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-site { padding-left: 3rem; padding-right: 3rem; }
+}
+@media (min-width: 1280px) {
+  .container-site { padding-left: 4rem; padding-right: 4rem; }
+}
+
+/* Hairline rule */
+.rule {
+  border: none;
+  border-top: 1px solid var(--color-brand-line);
+  width: 100%;
+}
+.rule-dark {
+  border: none;
+  border-top: 1px solid var(--color-brand-line-dark);
+  width: 100%;
+}
+
+/* Section padding */
+.section-padding    { padding-top: var(--spacing-section);    padding-bottom: var(--spacing-section); }
+.section-padding-sm { padding-top: var(--spacing-section-sm); padding-bottom: var(--spacing-section-sm); }
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--color-brand-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-brand-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-brand-line); border-radius: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
