@@ -47,29 +47,28 @@ const FAQS = [
 
 export function FAQ() {
   return (
-    <section className="py-24 lg:py-32 bg-brand-dark" aria-label="Perguntas frequentes">
+    <section className="section-padding" style={{ backgroundColor: 'var(--color-brand-bg)' }} aria-label="Perguntas frequentes">
       <div className="container-site">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
-          <RevealOnScroll className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-24">
+          <RevealOnScroll>
             <div className="lg:sticky lg:top-28">
-              <p className="text-caption text-brand-bronze mb-3">Dúvidas comuns</p>
-              <h2 className="text-display-md text-brand-cream mb-6">Perguntas<br /> frequentes</h2>
-              <p style={{ color: 'var(--color-brand-muted)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-                Não encontrou o que buscava? Fale diretamente com nossa equipe.
+              <p className="eyebrow" style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.25rem' }}>
+                Dúvidas comuns
               </p>
-              <WhatsAppButton label="Falar com especialista" variant="ghost" />
+              <h2 className="text-display-md mb-6" style={{ color: 'var(--color-brand-text)' }}>
+                Perguntas frequentes
+              </h2>
+              <p className="body-text mb-8" style={{ color: 'var(--color-brand-text-2)', maxWidth: '24rem' }}>
+                Não encontrou o que buscava? Fale diretamente com a nossa equipe — respondemos em até 24h.
+              </p>
+              <WhatsAppButton label="Falar com especialista" variant="outline-dark" />
             </div>
           </RevealOnScroll>
 
-          <RevealOnScroll className="lg:col-span-2">
+          <RevealOnScroll>
             <div role="list" aria-label="Lista de perguntas frequentes">
               {FAQS.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  pergunta={faq.pergunta}
-                  resposta={faq.resposta}
-                  index={i}
-                />
+                <AccordionItem key={i} pergunta={faq.pergunta} resposta={faq.resposta} index={i} />
               ))}
             </div>
           </RevealOnScroll>

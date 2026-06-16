@@ -1,143 +1,166 @@
+import { motion } from 'framer-motion';
 import { RevealOnScroll } from '../ui/RevealOnScroll';
+import { staggerContainer, staggerItem } from '../ui/RevealOnScroll';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 
 const PASSOS = [
   {
     num: '01',
-    titulo: 'Histórico',
+    titulo: 'História',
     descricao:
-      'Antes de qualquer linha riscada, entendemos quem você é. Seu histórico pessoal, suas memórias sensoriais e sua identidade visual se tornam a linguagem do projeto — exclusivamente sua. Não existe um projeto H+ que pareça com outro.',
+      'Antes de qualquer traço, mapeamos quem você é. Histórico, memórias e identidade viram a linguagem do projeto — exclusivamente sua.',
   },
   {
     num: '02',
     titulo: 'Harmonia',
     descricao:
-      'Você vê o resultado antes de qualquer obra começar. Imagens 3D, plantas e tour 360° das cinco dimensões do espaço: distribuição, função, toques, visuais e sensações. O projeto só avança quando você reconhece o espaço como seu.',
+      'Você vê o espaço pronto antes da obra começar: imagens 3D, plantas e tour 360°. O projeto só avança quando você o reconhece como seu.',
   },
   {
     num: '03',
     titulo: 'Habilidade Técnica',
     descricao:
-      'Mais de 8 anos de obras e +1.300 itens técnicos analisados por projeto. A diferença entre um espaço bonito e uma obra que funciona está no que você nunca vai precisar resolver duas vezes. Cada especificação é revisada antes de chegar ao canteiro.',
+      '+8 anos de obra e mais de 1.300 itens técnicos revisados por projeto. O que funciona, você nunca precisa resolver duas vezes.',
   },
   {
     num: '04',
     titulo: 'Homologação',
     descricao:
-      'Fornecedores verificados. Planilhas estruturadas. Política anti-RT: nenhuma comissão de fornecedor influencia nossas especificações. O que escolhemos é sempre o melhor para o seu projeto — não o que nos remunera.',
+      'Fornecedores verificados e política anti-RT: nenhuma comissão influencia nossas especificações. Sempre o melhor para o seu projeto.',
   },
 ];
+
+/* small architectural arch motif */
+function Arch({ className, style }) {
+  return (
+    <svg viewBox="0 0 64 36" fill="none" className={className} style={style} aria-hidden="true">
+      <path d="M2 36 V20 a30 30 0 0 1 60 0 V36" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  );
+}
 
 export function Metodo() {
   return (
     <section
       id="metodo"
-      className="py-24 lg:py-32"
-      style={{ backgroundColor: 'var(--color-brand-surface)' }}
+      className="section-padding curve-top"
+      style={{ backgroundColor: 'var(--color-brand-sand-warm)', overflow: 'hidden' }}
       aria-label="Método 4H+"
     >
       <div className="container-site">
-        <RevealOnScroll>
-          <div className="mb-16 max-w-2xl">
-            <p className="text-caption text-brand-bronze mb-3">Como trabalhamos</p>
-            <h2 className="text-display-md text-brand-cream mb-5">Método 4H+</h2>
-            <p style={{ color: 'var(--color-brand-muted)', lineHeight: 1.75, fontSize: '0.9375rem' }}>
-              Neuroarquitetura de Experiências. Quatro etapas desenvolvidas para que o seu próximo
-              espaço reflita com precisão quem você é — e como você quer se sentir nele.
-            </p>
-          </div>
-        </RevealOnScroll>
+        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 xl:gap-28">
+          {/* Left — copy */}
+          <RevealOnScroll>
+            <div className="lg:sticky lg:top-28">
+              <Arch style={{ width: '3.25rem', height: 'auto', color: 'var(--color-brand-gold)', marginBottom: '1.5rem', opacity: 0.9 }} />
+              <p className="eyebrow" style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.25rem' }}>
+                Como trabalhamos
+              </p>
+              <h2 className="text-display-md mb-6" style={{ color: 'var(--color-brand-text)' }}>
+                Método 4H+
+              </h2>
+              <p className="lead mb-5" style={{ color: 'var(--color-brand-text-2)', maxWidth: '34rem' }}>
+                Um processo proprietário para transformar intenção, técnica e estética em espaços que
+                permanecem.
+              </p>
+              <p className="body-text" style={{ color: 'var(--color-brand-text-2)', maxWidth: '34rem' }}>
+                Da primeira conversa à entrega, cada decisão tem função, beleza e viabilidade — é o
+                que separa contratar a H+ de contratar um escritório comum.
+              </p>
 
-        <hr className="rule" />
+              <div className="mt-10 pt-9" style={{ borderTop: '1px solid rgba(34,27,20,0.12)' }}>
+                <blockquote
+                  className="font-display mb-7"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.375rem, 2.2vw, 1.75rem)',
+                    fontStyle: 'italic',
+                    lineHeight: 1.4,
+                    fontWeight: 400,
+                    color: 'var(--color-brand-text)',
+                    maxWidth: '30rem',
+                  }}
+                >
+                  “Um espaço que não parte de quem você é nunca vai parecer seu — não importa quanto custe.”
+                  <footer className="text-caption mt-4" style={{ color: 'var(--color-brand-accent-ink)', fontStyle: 'normal' }}>
+                    Carol Smaniotto — Arquiteta Fundadora
+                  </footer>
+                </blockquote>
+                <div className="flex flex-col items-start gap-3">
+                  <WhatsAppButton label="Falar com especialista" variant="primary" />
+                  <span className="text-caption" style={{ color: 'var(--color-brand-text-2)' }}>Resposta em até 24h</span>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
 
-        {PASSOS.map((passo, i) => (
-          <RevealOnScroll key={passo.num} delay={i * 0.07}>
-            <div
-              className="grid grid-cols-1 md:grid-cols-[5rem_1fr_2fr] gap-6 lg:gap-14 py-12 lg:py-16 relative overflow-hidden"
-              style={{ borderBottom: '1px solid var(--color-brand-line)' }}
-            >
-              {/* Decorative number */}
-              <span
-                className="absolute right-0 top-1/2 -translate-y-1/2 font-display select-none pointer-events-none hidden lg:block"
-                aria-hidden="true"
-                style={{
-                  fontSize: 'clamp(8rem, 18vw, 15rem)',
-                  lineHeight: 1,
-                  fontWeight: 200,
-                  color: 'var(--color-brand-cream)',
-                  opacity: 0.028,
-                  fontFamily: 'var(--font-display)',
-                  letterSpacing: '-0.04em',
-                }}
+          {/* Right — pillar cards (offset 2×2) */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6"
+          >
+            {PASSOS.map((passo, i) => (
+              <motion.article
+                key={passo.num}
+                variants={staggerItem}
+                className={`card-soft card-hover relative flex flex-col h-full overflow-hidden ${i % 2 === 1 ? 'sm:mt-10' : ''}`}
+                style={{ padding: 'clamp(1.75rem, 2.4vw, 2.5rem)' }}
               >
-                {passo.num}
-              </span>
-
-              {/* Small number */}
-              <div className="flex items-start pt-1">
+                {/* faint background numeral */}
                 <span
-                  className="text-caption text-brand-bronze"
-                  style={{ fontSize: '0.6875rem' }}
+                  className="font-display select-none pointer-events-none absolute"
+                  aria-hidden="true"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '9rem',
+                    lineHeight: 0.7,
+                    fontWeight: 300,
+                    color: 'var(--color-brand-text)',
+                    opacity: 0.05,
+                    top: '0.5rem',
+                    right: '0.75rem',
+                    letterSpacing: '-0.04em',
+                  }}
                 >
                   {passo.num}
                 </span>
-              </div>
 
-              {/* Title */}
-              <div className="flex items-start">
+                {/* marker: number + mini rule */}
+                <div className="flex items-center gap-3 mb-7" style={{ position: 'relative' }}>
+                  <span
+                    className="font-display"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: '1.0625rem', fontWeight: 600, color: 'var(--color-brand-gold)', letterSpacing: '0.04em' }}
+                  >
+                    {passo.num}
+                  </span>
+                  <span style={{ width: '1.75rem', height: '1px', backgroundColor: 'var(--color-brand-gold)', opacity: 0.6 }} />
+                </div>
+
                 <h3
-                  className="font-display text-brand-cream"
+                  className="font-display"
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.375rem, 2.5vw, 1.875rem)',
+                    fontSize: 'clamp(1.5rem, 2vw, 1.875rem)',
                     lineHeight: 1.1,
-                    fontWeight: 300,
+                    fontWeight: 400,
                     letterSpacing: '-0.01em',
-                    paddingTop: '0.1rem',
+                    color: 'var(--color-brand-text)',
+                    marginBottom: '0.875rem',
+                    position: 'relative',
                   }}
                 >
                   {passo.titulo}
                 </h3>
-              </div>
-
-              {/* Description */}
-              <div>
-                <p style={{ color: 'var(--color-brand-muted)', lineHeight: 1.78, fontSize: '0.9375rem' }}>
+                <p style={{ color: 'var(--color-brand-text-2)', fontSize: '1rem', lineHeight: 1.68, position: 'relative' }}>
                   {passo.descricao}
                 </p>
-              </div>
-            </div>
-          </RevealOnScroll>
-        ))}
-
-        <RevealOnScroll>
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 pt-14">
-            <blockquote className="max-w-2xl">
-              <p
-                className="font-display text-brand-cream mb-5"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(1.125rem, 2.5vw, 1.625rem)',
-                  fontStyle: 'italic',
-                  lineHeight: 1.38,
-                  fontWeight: 300,
-                }}
-              >
-                "Um espaço que não parte de quem você é nunca vai parecer seu — não importa quanto custe."
-              </p>
-              <footer className="text-caption text-brand-bronze">
-                Carol Smaniotto — Arquiteta Fundadora, H+ Arquitetura & Co
-              </footer>
-            </blockquote>
-
-            <div className="flex flex-col items-start lg:items-end gap-3 flex-shrink-0">
-              <WhatsAppButton label="Falar com especialista" variant="primary" />
-              <span className="text-caption" style={{ color: 'var(--color-brand-muted)', fontSize: '0.5625rem' }}>
-                Resposta em até 24h
-              </span>
-            </div>
-          </div>
-        </RevealOnScroll>
+              </motion.article>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -3,101 +3,88 @@ import { motion } from 'framer-motion';
 
 const MotionLink = motion(Link);
 
-export function ProjectCard({ projeto, size = 'normal' }) {
+/* Editorial card: framed image + caption beneath (always legible). */
+export function ProjectCard({ projeto, aspect = '4 / 3', featured = false }) {
   return (
     <MotionLink
       to={`/projetos/${projeto.slug}`}
-      className="relative block w-full h-full overflow-hidden"
-      style={{ backgroundColor: 'var(--color-brand-card)' }}
+      className="group block w-full"
       aria-label={`Ver projeto ${projeto.nome}`}
       initial="idle"
       whileHover="hovered"
     >
-      {/* Image — always visible */}
-      <motion.img
-        src={projeto.thumb}
-        alt={`${projeto.nome} — ${projeto.categoria}`}
-        loading={size === 'featured' ? 'eager' : 'lazy'}
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover"
-        variants={{
-          idle:    { scale: 1 },
-          hovered: { scale: 1.05 },
-        }}
-        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      />
-
-      {/* Overlay — invisible by default, fades in on hover */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          background: 'linear-gradient(to top, rgba(26,20,16,0.9) 0%, rgba(26,20,16,0.4) 55%, transparent 100%)',
-        }}
-        variants={{
-          idle:    { opacity: 0 },
-          hovered: { opacity: 1 },
-        }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      />
-
-      {/* Text — slides up from bottom on hover */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0"
-        style={{ padding: size === 'featured' ? '2.5rem 3rem' : '1.5rem' }}
-        variants={{
-          idle:    { y: 12, opacity: 0 },
-          hovered: { y: 0,  opacity: 1 },
-        }}
-        transition={{ duration: 0.4, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+      {/* Image frame */}
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ aspectRatio: aspect, backgroundColor: 'var(--color-brand-bg-alt)', borderRadius: 'var(--radius-md)' }}
       >
-        <p style={{
-          color: 'var(--color-brand-gold)',
-          fontSize: '0.625rem',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          fontWeight: 500,
-          marginBottom: '0.375rem',
-        }}>
-          {projeto.categoria} · {projeto.ano}
-        </p>
-        <h3
-          className="font-display text-brand-cream"
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: size === 'featured' ? 'clamp(1.5rem, 2.5vw, 2.25rem)' : '1.125rem',
-            lineHeight: 1.1,
-            fontWeight: 300,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          {projeto.nome}
-        </h3>
-        {size === 'featured' && (
-          <p style={{
-            color: 'rgba(240,234,224,0.65)',
-            fontSize: '0.875rem',
-            lineHeight: 1.65,
-            marginTop: '0.625rem',
-            maxWidth: '36rem',
-          }}>
-            {projeto.descricao?.split('.')[0]}.
+        <motion.img
+          src={projeto.thumb}
+          alt={`${projeto.nome} — ${projeto.categoria}`}
+          loading={featured ? 'eager' : 'lazy'}
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+          variants={{ idle: { scale: 1 }, hovered: { scale: 1.045 } }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        />
+        {/* faint inner border for refinement */}
+        <span
+          className="absolute inset-0 pointer-events-none"
+          style={{ boxShadow: 'inset 0 0 0 1px rgba(34,27,20,0.06)', borderRadius: 'var(--radius-md)' }}
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Caption */}
+      <div className="flex items-start justify-between gap-4" style={{ marginTop: '1.125rem' }}>
+        <div>
+          <p
+            className="text-caption"
+            style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '0.4rem' }}
+          >
+            {projeto.categoria} · {projeto.ano}
           </p>
-        )}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.375rem',
-          marginTop: '0.75rem',
-          color: 'var(--color-brand-cream)',
-        }}>
-          <span style={{ fontSize: '0.5625rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600 }}>
-            Ver projeto
-          </span>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ width: '0.875rem', height: '0.875rem' }}>
+          <h3
+            className="font-display transition-colors duration-200"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: featured ? 'clamp(1.625rem, 2.4vw, 2.125rem)' : '1.375rem',
+              lineHeight: 1.12,
+              fontWeight: 400,
+              letterSpacing: '-0.01em',
+              color: 'var(--color-brand-text)',
+            }}
+          >
+            {projeto.nome}
+          </h3>
+          {featured && (
+            <p
+              className="body-text"
+              style={{ color: 'var(--color-brand-text-2)', marginTop: '0.75rem', maxWidth: '40rem' }}
+            >
+              {projeto.descricao?.split('.')[0]}.
+            </p>
+          )}
+        </div>
+        <motion.span
+          className="flex-shrink-0 flex items-center justify-center"
+          style={{
+            width: '2.5rem',
+            height: '2.5rem',
+            borderRadius: '999px',
+            border: '1px solid var(--color-brand-line-2)',
+            color: 'var(--color-brand-text)',
+            marginTop: '0.25rem',
+          }}
+          variants={{ idle: { x: 0, backgroundColor: 'rgba(0,0,0,0)' }, hovered: { x: 4, backgroundColor: 'var(--color-brand-gold)' } }}
+          transition={{ duration: 0.25 }}
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ width: '0.9rem', height: '0.9rem' }}>
             <path d="M3 8h10M9 4l4 4-4 4" />
           </svg>
-        </div>
-      </motion.div>
+        </motion.span>
+      </div>
     </MotionLink>
   );
 }

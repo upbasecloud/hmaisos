@@ -1,59 +1,89 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Dark anchors (Hero, Depoimentos, Contato, Projeto page) ── */
-  --color-brand-dark: #1A1410;
-  --color-brand-dark-2: #211D19;
-  --color-brand-surface: #211D19;
-  --color-brand-card: #272119;
+  /* ─────────────────────────────────────────────
+     PALETTE — warm, light-dominant editorial
+     Dark anchors used only for Hero + final CTA + Footer.
+     ───────────────────────────────────────────── */
 
-  /* ── Light backgrounds (main site, most sections) ── */
-  --color-brand-bg: #F5F0E8;
-  --color-brand-bg-alt: #EDE7DA;
+  /* Dark anchors (warm off-black → graphite) */
+  --color-brand-dark:    #15100B;
+  --color-brand-dark-2:  #1C1610;
+  --color-brand-surface: #1C1610;
+  --color-brand-card:    #241C14;
 
-  /* ── Text on light backgrounds ── */
-  --color-brand-text: #2C2420;
-  --color-brand-text-2: #7A6E66;
+  /* Light canvases (bone → sand) */
+  --color-brand-bg:      #F7F2EA;  /* bone — primary canvas */
+  --color-brand-bg-alt:  #EFE8DB;  /* sand — alternating sections */
+  --color-brand-paper:   #FCFAF4;  /* near-white — cards on light */
 
-  /* ── Text on dark backgrounds ── */
-  --color-brand-cream: #F0EAE0;
-  --color-brand-muted: #9E9488;
+  /* Text on light */
+  --color-brand-text:    #221B14;  /* ink */
+  --color-brand-text-2:  #645749;  /* secondary ink — AA on bone */
 
-  /* ── Accent — use sparingly (max 5 instances/page) ── */
-  --color-brand-gold: #B8935F;
-  --color-brand-bronze: #B8935F;
+  /* Text on dark */
+  --color-brand-cream:   #F4EEE4;
+  --color-brand-muted:   #B3A797;  /* brighter muted for legibility on dark */
 
-  /* ── Dividers ── */
-  --color-brand-line: #DDD7CE;
-  --color-brand-line-dark: #2C2720;
+  /* Accent — bronze. Use sparingly. */
+  --color-brand-gold:    #B8935F;
+  --color-brand-bronze:  #B8935F;
+  --color-brand-accent-ink: #8A6736; /* darker bronze for small text on light (contrast) */
+
+  /* Dividers */
+  --color-brand-line:      #E0D8CA;  /* hairline on light */
+  --color-brand-line-2:    #CFC5B4;  /* stronger hairline on light */
+  --color-brand-line-dark: #382D20;  /* hairline on dark */
 
   /* ── Fonts ── */
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'DM Sans', sans-serif;
 
-  /* ── Typography scale ── */
-  --font-size-display-xl: clamp(3rem, 8vw, 7rem);
-  --line-height-display-xl: 0.93;
-  --letter-spacing-display-xl: -0.03em;
+  /* ─────────────────────────────────────────────
+     TYPE SCALE — bumped for legibility
+     ───────────────────────────────────────────── */
+  --font-size-display-xl: clamp(3.25rem, 8.5vw, 7.5rem);
+  --line-height-display-xl: 0.95;
+  --letter-spacing-display-xl: -0.025em;
 
-  --font-size-display-lg: clamp(2.25rem, 5vw, 4.25rem);
-  --line-height-display-lg: 0.97;
-  --letter-spacing-display-lg: -0.025em;
+  --font-size-display-lg: clamp(2.5rem, 5.5vw, 4.5rem);
+  --line-height-display-lg: 1.0;
+  --letter-spacing-display-lg: -0.022em;
 
-  --font-size-display-md: clamp(1.875rem, 3.5vw, 3rem);
-  --line-height-display-md: 1.0;
+  --font-size-display-md: clamp(2.125rem, 4vw, 3.5rem);
+  --line-height-display-md: 1.03;
   --letter-spacing-display-md: -0.02em;
 
-  --font-size-caption: 0.6875rem;
+  --font-size-display-sm: clamp(1.625rem, 2.8vw, 2.25rem);
+  --line-height-display-sm: 1.1;
+  --letter-spacing-display-sm: -0.015em;
+
+  --font-size-caption: 0.75rem;          /* 12px — was 11px */
   --line-height-caption: 1.5;
-  --letter-spacing-caption: 0.14em;
+  --letter-spacing-caption: 0.18em;
 
-  /* ── Spacing ── */
-  --spacing-section: 8rem;
-  --spacing-section-sm: 5rem;
+  /* ─────────────────────────────────────────────
+     SPACING SCALE
+     mobile ≈ 64px · tablet ≈ 80–96px · desktop ≈ 120–140px
+     ───────────────────────────────────────────── */
+  --spacing-section:    clamp(4rem, 2rem + 6vw, 8.75rem);
+  --spacing-section-sm: clamp(3.5rem, 2rem + 4.5vw, 6.5rem);
 
-  /* ── Section curve ── */
-  --curve: clamp(1.5rem, 4vw, 3rem);
+  /* ─────────────────────────────────────────────
+     RADIUS — elegant, architectural curves
+     ───────────────────────────────────────────── */
+  --radius-sm: 0.625rem;   /* 10px */
+  --radius-md: 1rem;       /* 16px */
+  --radius-lg: 1.5rem;     /* 24px */
+  --radius-xl: 2.25rem;    /* 36px */
+  --radius-curve: clamp(2rem, 5vw, 4rem);
+
+  /* ── Soft, premium shadows ── */
+  --shadow-soft: 0 1px 2px rgba(34,27,20,0.04), 0 12px 30px -16px rgba(34,27,20,0.18);
+  --shadow-lift: 0 2px 6px rgba(34,27,20,0.06), 0 26px 50px -20px rgba(34,27,20,0.26);
+
+  /* ── Extra surfaces ── */
+  --color-brand-sand-warm: #ECE2D0;  /* warmer sand panel — Método */
 }
 
 *, *::before, *::after {
@@ -64,16 +94,18 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
   background-color: var(--color-brand-bg);
   color: var(--color-brand-text);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 1.0625rem;       /* 17px base */
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
   min-width: 320px;
 }
@@ -88,14 +120,14 @@ body {
   color: var(--color-brand-dark);
   font-family: var(--font-body);
   font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: 2px;
+  font-weight: 600;
+  border-radius: 3px;
   text-decoration: none;
   transition: top 0.2s;
 }
 .skip-nav:focus { top: 1rem; }
 
-/* Typography utilities */
+/* ── Typography utilities ── */
 .font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
 
@@ -106,7 +138,6 @@ body {
   letter-spacing: var(--letter-spacing-display-xl);
   font-weight: 300;
 }
-
 .text-display-lg {
   font-family: var(--font-display);
   font-size: var(--font-size-display-lg);
@@ -114,7 +145,6 @@ body {
   letter-spacing: var(--letter-spacing-display-lg);
   font-weight: 300;
 }
-
 .text-display-md {
   font-family: var(--font-display);
   font-size: var(--font-size-display-md);
@@ -122,58 +152,184 @@ body {
   letter-spacing: var(--letter-spacing-display-md);
   font-weight: 300;
 }
+.text-display-sm {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display-sm);
+  line-height: var(--line-height-display-sm);
+  letter-spacing: var(--letter-spacing-display-sm);
+  font-weight: 400;
+}
 
 .text-caption {
   font-size: var(--font-size-caption);
   line-height: var(--line-height-caption);
   letter-spacing: var(--letter-spacing-caption);
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-/* Container */
+/* Reading text — comfortable body copy */
+.lead {
+  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  line-height: 1.65;
+  font-weight: 300;
+}
+.body-text {
+  font-size: 1.0625rem;       /* 17px */
+  line-height: 1.75;
+  font-weight: 400;
+}
+@media (min-width: 768px) {
+  .body-text { font-size: 1.125rem; }  /* 18px on larger screens */
+}
+
+/* Section eyebrow (caption + bronze) with a small leading rule */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  font-size: var(--font-size-caption);
+  letter-spacing: var(--letter-spacing-caption);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+/* ── Container ── */
 .container-site {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 @media (min-width: 768px) {
-  .container-site { padding-left: 3rem; padding-right: 3rem; }
+  .container-site { padding-left: 2.5rem; padding-right: 2.5rem; }
 }
 @media (min-width: 1280px) {
   .container-site { padding-left: 4rem; padding-right: 4rem; }
 }
 
-/* Hairline rule */
-.rule {
-  border: none;
-  border-top: 1px solid var(--color-brand-line);
+/* Narrower container for text-heavy sections */
+.container-narrow {
   width: 100%;
-}
-.rule-dark {
-  border: none;
-  border-top: 1px solid var(--color-brand-line-dark);
-  width: 100%;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-/* Section padding */
+/* ── Rules ── */
+.rule       { border: none; border-top: 1px solid var(--color-brand-line);      width: 100%; }
+.rule-dark  { border: none; border-top: 1px solid var(--color-brand-line-dark); width: 100%; }
+
+/* ── Section padding ── */
 .section-padding    { padding-top: var(--spacing-section);    padding-bottom: var(--spacing-section); }
 .section-padding-sm { padding-top: var(--spacing-section-sm); padding-bottom: var(--spacing-section-sm); }
 
-/* Focus */
+/* ── Curved section transition: a section rides up over the previous one
+      with a large rounded top, revealing the prior background in the corners.
+      Requires the element to set its own background-color. ── */
+.curve-top {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--radius-curve));
+  border-top-left-radius: var(--radius-curve);
+  border-top-right-radius: var(--radius-curve);
+}
+/* When a curved section adds its own top padding, compensate for the pull-up
+   so interior spacing stays on the spacing scale. */
+.curve-top.section-padding    { padding-top: calc(var(--spacing-section)    + var(--radius-curve)); }
+.curve-top.section-padding-sm { padding-top: calc(var(--spacing-section-sm) + var(--radius-curve)); }
+
+/* ── Card surface ── */
+.card-soft {
+  background-color: var(--color-brand-paper);
+  border: 1px solid var(--color-brand-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--color-brand-line-2);
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;          /* 13px — comfortably tappable label */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 1rem 1.75rem;         /* ≥48px tall touch target */
+  border-radius: 2px;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+  line-height: 1;
+}
+.btn-lg { padding: 1.125rem 2.25rem; font-size: 0.8125rem; }
+
+/* Filled bronze — primary CTA (works on light or dark) */
+.btn-gold {
+  background: var(--color-brand-gold);
+  color: #1A130A;
+  border-color: var(--color-brand-gold);
+}
+.btn-gold:hover { background: #C9A26B; border-color: #C9A26B; }
+
+/* Outline on dark backgrounds */
+.btn-outline-light {
+  background: transparent;
+  color: var(--color-brand-cream);
+  border-color: rgba(244,238,228,0.35);
+}
+.btn-outline-light:hover { border-color: var(--color-brand-cream); background: rgba(244,238,228,0.06); }
+
+/* Outline on light backgrounds */
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-brand-text);
+  border-color: rgba(34,27,20,0.28);
+}
+.btn-outline-dark:hover { border-color: var(--color-brand-text); background: rgba(34,27,20,0.04); }
+
+/* Ghost link-style */
+.btn-ghost {
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--color-brand-accent-ink);
+}
+.btn-ghost:hover { color: var(--color-brand-text); }
+
+/* ── Focus ── */
 :focus-visible {
   outline: 2px solid var(--color-brand-gold);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--color-brand-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-brand-line); border-radius: 2px; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-brand-bg-alt); }
+::-webkit-scrollbar-thumb { background: var(--color-brand-line-2); border-radius: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -1,127 +1,146 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { RevealOnScroll } from '../ui/RevealOnScroll';
+import { staggerContainer, staggerItem } from '../ui/RevealOnScroll';
 import { depoimentos } from '../../data/depoimentos';
-import { projetos } from '../../data/projetos';
 
-function Avatar({ nome, foto }) {
+function Avatar({ nome, foto, size = 48 }) {
+  const dim = { width: size, height: size };
   if (foto) {
-    return (
-      <img
-        src={foto}
-        alt={nome}
-        className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-      />
-    );
+    return <img src={foto} alt={nome} className="rounded-full object-cover flex-shrink-0" style={dim} />;
   }
-  const initials = nome
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  const initials = nome.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase();
   return (
     <div
-      className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-brand-dark font-semibold"
-      style={{ backgroundColor: 'var(--color-brand-bronze)', fontSize: '0.875rem' }}
+      className="rounded-full flex items-center justify-center flex-shrink-0"
+      style={{ ...dim, backgroundColor: 'var(--color-brand-bg-alt)', border: '1px solid var(--color-brand-line-2)', color: 'var(--color-brand-accent-ink)', fontSize: size > 48 ? '1.0625rem' : '0.875rem', fontWeight: 600, fontFamily: 'var(--font-display)' }}
     >
       {initials}
     </div>
   );
 }
 
+function QuoteMark({ size = '4rem' }) {
+  return (
+    <span
+      className="font-display block"
+      style={{ fontFamily: 'var(--font-display)', fontSize: size, lineHeight: 0.5, color: 'var(--color-brand-gold)', opacity: 0.5 }}
+      aria-hidden="true"
+    >
+      ”
+    </span>
+  );
+}
+
+function Caption({ dep, big }) {
+  return (
+    <figcaption className="flex items-center gap-4 mt-8 pt-7" style={{ borderTop: '1px solid var(--color-brand-line)' }}>
+      <Avatar nome={dep.nome} foto={dep.foto} size={big ? 56 : 48} />
+      <div className="min-w-0">
+        <p style={{ fontSize: big ? '1.125rem' : '1rem', fontWeight: 600, color: 'var(--color-brand-text)', letterSpacing: '0.01em' }}>
+          {dep.nome}
+        </p>
+        <Link
+          to={`/projetos/${dep.projetoSlug}`}
+          className="transition-colors duration-200 hover:underline underline-offset-2"
+          style={{ fontSize: '0.875rem', color: 'var(--color-brand-text-2)' }}
+        >
+          {dep.projeto}{dep.area ? ` · ${dep.area}` : ''}
+        </Link>
+      </div>
+    </figcaption>
+  );
+}
+
 export function Depoimentos() {
+  const [featured, ...outros] = depoimentos;
+
   return (
     <section
-      className="py-24 lg:py-32"
-      style={{ backgroundColor: 'var(--color-brand-surface)' }}
+      className="section-padding curve-top"
+      style={{ backgroundColor: 'var(--color-brand-bg-alt)', overflow: 'hidden' }}
       aria-label="Depoimentos de clientes"
     >
       <div className="container-site">
         <RevealOnScroll>
-          <p className="text-caption text-brand-bronze mb-3">O que dizem</p>
-          <h2 className="text-display-md text-brand-cream mb-14">
-            Clientes que não<br className="hidden sm:block" /> aceitaram mediano.
-          </h2>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 lg:mb-20">
+            <div className="max-w-2xl">
+              <p className="eyebrow" style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.25rem' }}>
+                Prova social
+              </p>
+              <h2 className="text-display-md" style={{ color: 'var(--color-brand-text)' }}>
+                Clientes que não aceitaram o mediano.
+              </h2>
+            </div>
+            <p className="body-text lg:text-right" style={{ color: 'var(--color-brand-text-2)', maxWidth: '26rem' }}>
+              Projetos que começam com escuta, evoluem com técnica e terminam com espaços que fazem
+              sentido para quem vive neles.
+            </p>
+          </div>
         </RevealOnScroll>
 
-        <hr className="rule" />
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6"
+        >
+          {/* Featured */}
+          <motion.figure
+            variants={staggerItem}
+            className="card-soft flex flex-col lg:col-span-7"
+            style={{ padding: 'clamp(2rem, 3.5vw, 3.25rem)' }}
+          >
+            <QuoteMark size="5rem" />
+            <blockquote className="flex-1">
+              <p
+                className="font-display"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(1.5rem, 2.4vw, 2rem)',
+                  fontWeight: 400,
+                  lineHeight: 1.42,
+                  fontStyle: 'italic',
+                  color: 'var(--color-brand-text)',
+                }}
+              >
+                {featured.texto}
+              </p>
+            </blockquote>
+            <Caption dep={featured} big />
+          </motion.figure>
 
-        <div>
-          {depoimentos.map((dep, i) => {
-            const projeto = projetos.find((p) => p.slug === dep.projetoSlug);
-            return (
-              <RevealOnScroll key={i} delay={i * 0.08}>
-                <div
-                  className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 lg:gap-20 py-12 lg:py-16"
-                  style={{ borderBottom: '1px solid var(--color-brand-line)' }}
-                >
-                  {/* Quote + attribution */}
-                  <div>
-                    <blockquote>
-                      <p
-                        className="font-display text-brand-cream mb-8"
-                        style={{
-                          fontFamily: 'var(--font-display)',
-                          fontSize: 'clamp(1.0625rem, 2vw, 1.375rem)',
-                          fontWeight: 300,
-                          lineHeight: 1.58,
-                          fontStyle: 'italic',
-                        }}
-                      >
-                        "{dep.texto}"
-                      </p>
-                      <footer className="flex items-center gap-4">
-                        <Avatar nome={dep.nome} foto={dep.foto} />
-                        <div>
-                          <p
-                            className="text-caption text-brand-cream"
-                            style={{ fontSize: '0.75rem', letterSpacing: '0.1em' }}
-                          >
-                            {dep.nome}
-                          </p>
-                          <p
-                            className="text-caption text-brand-muted mt-0.5"
-                            style={{ fontSize: '0.625rem' }}
-                          >
-                            {dep.projeto}
-                            {dep.area ? ` · ${dep.area}` : ''}
-                          </p>
-                        </div>
-                      </footer>
-                    </blockquote>
-                  </div>
-
-                  {/* Project thumbnail */}
-                  {projeto && (
-                    <div className="hidden lg:block flex-shrink-0 self-center">
-                      <Link to={`/projetos/${dep.projetoSlug}`} className="group block">
-                        <div
-                          className="relative overflow-hidden mb-2"
-                          style={{ width: '168px', aspectRatio: '4/3' }}
-                        >
-                          <img
-                            src={projeto.thumb}
-                            alt={projeto.nome}
-                            loading="lazy"
-                            decoding="async"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-600 group-hover:scale-105"
-                            style={{ filter: 'grayscale(25%)' }}
-                          />
-                        </div>
-                        <p
-                          className="text-caption text-brand-muted group-hover:text-brand-bronze transition-colors duration-200"
-                          style={{ fontSize: '0.5625rem', letterSpacing: '0.12em' }}
-                        >
-                          Ver projeto →
-                        </p>
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </RevealOnScroll>
-            );
-          })}
-        </div>
+          {/* Secondary */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            {outros.map((dep, i) => (
+              <motion.figure
+                key={i}
+                variants={staggerItem}
+                className="card-soft flex flex-col h-full"
+                style={{ padding: 'clamp(1.75rem, 2.4vw, 2.25rem)' }}
+              >
+                <QuoteMark size="3.25rem" />
+                <blockquote className="flex-1">
+                  <p
+                    className="font-display"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(1.1875rem, 1.5vw, 1.375rem)',
+                      fontWeight: 400,
+                      lineHeight: 1.48,
+                      fontStyle: 'italic',
+                      color: 'var(--color-brand-text)',
+                    }}
+                  >
+                    {dep.texto}
+                  </p>
+                </blockquote>
+                <Caption dep={dep} />
+              </motion.figure>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
-import { WhatsAppButton } from '../ui/WhatsAppButton';
+
+const WHATSAPP_URL =
+  'https://api.whatsapp.com/send/?phone=554792902127&text=' +
+  encodeURIComponent('Olá! Vim pelo site e tenho interesse em desenvolver um projeto.');
 
 const NAV_LINKS = [
   { label: 'Projetos', href: '/#projetos' },
@@ -8,74 +11,80 @@ const NAV_LINKS = [
   { label: 'Contato', href: '/#contato' },
 ];
 
+const linkStyle = { fontSize: '1rem', color: 'rgba(244,238,228,0.7)', textDecoration: 'none' };
+
+function FootLink({ href, children, external }) {
+  const props = external ? { href, target: '_blank', rel: 'noopener noreferrer' } : { href };
+  return (
+    <a
+      {...props}
+      style={linkStyle}
+      className="transition-colors duration-200 hover:text-brand-cream"
+    >
+      {children}
+    </a>
+  );
+}
+
 export function Footer() {
   return (
-    <footer className="bg-brand-surface border-t border-brand-line" role="contentinfo">
-      <div className="container-site py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+    <footer style={{ backgroundColor: 'var(--color-brand-dark-2)' }} role="contentinfo">
+      <div className="container-site" style={{ paddingTop: 'clamp(4rem, 7vw, 6rem)', paddingBottom: '3rem' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-4">
-              <img src="/images/brand/logo.png" alt="H+ Arquitetura & Co" className="h-8 w-8 object-contain" />
-              <span className="font-display text-brand-cream font-normal" style={{ fontSize: '1.05rem' }}>
-                H<span className="text-brand-bronze">+</span> Arquitetura & Co
+          <div className="col-span-2 lg:col-span-1">
+            <Link to="/" className="flex items-center gap-3 mb-5">
+              <img src="/images/brand/logo.png" alt="" className="h-9 w-9 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+              <span className="font-display font-normal" style={{ fontSize: '1.1875rem', color: 'var(--color-brand-cream)' }}>
+                H<span style={{ color: 'var(--color-brand-bronze)' }}>+</span> Arquitetura&nbsp;&amp;&nbsp;Co
               </span>
             </Link>
-            <p className="text-caption text-brand-muted mb-6">
-              Arquitetura de alto padrão · Joinville, SC
-            </p>
-            <p className="text-sm text-brand-muted leading-relaxed">
-              Rua Piratuba, 1253<br />
-              Bom Retiro, Joinville/SC
+            <p className="body-text" style={{ color: 'rgba(244,238,228,0.6)', maxWidth: '22rem' }}>
+              Arquitetura e interiores de alto padrão, do conceito à entrega. Joinville, SC · Miami, FL.
             </p>
           </div>
 
-          {/* Nav */}
-          <div className="lg:col-span-1">
-            <p className="text-caption text-brand-bronze mb-6">Navegação</p>
-            <ul className="space-y-3">
+          {/* Navegação */}
+          <div>
+            <p className="text-caption" style={{ color: 'var(--color-brand-gold)', marginBottom: '1.5rem' }}>Navegação</p>
+            <ul className="flex flex-col gap-3.5">
               {NAV_LINKS.map(({ label, href }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="text-sm text-brand-muted hover:text-brand-cream transition-colors duration-200"
-                  >
-                    {label}
-                  </a>
-                </li>
+                <li key={label}><FootLink href={href}>{label}</FootLink></li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="lg:col-span-1">
-            <p className="text-caption text-brand-bronze mb-6">Contato</p>
-            <div className="space-y-4">
-              <a
-                href="https://instagram.com/hmais.arq"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-sm text-brand-muted hover:text-brand-cream transition-colors duration-200"
-                aria-label="Instagram @hmais.arq"
-              >
-                Instagram — @hmais.arq
-              </a>
-              <a
-                href="mailto:contato@hmaisco.com"
-                className="block text-sm text-brand-muted hover:text-brand-cream transition-colors duration-200"
-              >
-                contato@hmaisco.com
-              </a>
-              <WhatsAppButton label="WhatsApp" variant="ghost" className="text-xs px-0" />
-            </div>
+          {/* Contato */}
+          <div>
+            <p className="text-caption" style={{ color: 'var(--color-brand-gold)', marginBottom: '1.5rem' }}>Contato</p>
+            <ul className="flex flex-col gap-3.5">
+              <li style={{ fontSize: '1rem', color: 'rgba(244,238,228,0.7)', lineHeight: 1.5 }}>Rua Piratuba, 1253<br />Bom Retiro, Joinville/SC</li>
+              <li><FootLink href="mailto:contato@hmaisco.com">contato@hmaisco.com</FootLink></li>
+            </ul>
+          </div>
+
+          {/* Redes */}
+          <div>
+            <p className="text-caption" style={{ color: 'var(--color-brand-gold)', marginBottom: '1.5rem' }}>Redes sociais</p>
+            <ul className="flex flex-col gap-3.5">
+              <li><FootLink href="https://instagram.com/hmais.arq" external>Instagram · @hmais.arq</FootLink></li>
+              <li>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:underline underline-offset-4" style={{ fontSize: '1rem', color: 'var(--color-brand-gold)', textDecoration: 'none' }}>
+                  WhatsApp →
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="rule mt-12 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-caption text-brand-muted/60">
+        <div
+          className="mt-16 pt-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+          style={{ borderTop: '1px solid var(--color-brand-line-dark)' }}
+        >
+          <p className="text-caption" style={{ color: 'rgba(244,238,228,0.4)' }}>
             © 2024 H+ Arquitetura & Co · Todos os direitos reservados
           </p>
-          <p className="text-caption text-brand-muted/40">CNPJ 41.887.339/0001-15</p>
+          <p className="text-caption" style={{ color: 'rgba(244,238,228,0.3)' }}>CNPJ 41.887.339/0001-15</p>
         </div>
       </div>
     </footer>

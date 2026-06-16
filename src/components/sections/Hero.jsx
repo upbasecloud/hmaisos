@@ -2,17 +2,18 @@ import { motion } from 'framer-motion';
 import { WhatsAppButton } from '../ui/WhatsAppButton';
 
 const METRICS = [
-  ['+847', 'Projetos'],
-  ['11',   'Estados'],
-  ['8 anos', 'Expertise'],
-  ['Miami', 'FL'],
+  ['+847', 'Projetos entregues'],
+  ['11', 'Estados atendidos'],
+  ['8 anos', 'De expertise'],
+  ['Miami', 'FL · EUA'],
 ];
 
 const lineVariants = {
-  hidden:  { opacity: 0, y: 36 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.35 + i * 0.14 },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.13 },
   }),
 };
 
@@ -24,12 +25,14 @@ export function Hero() {
       aria-label="Apresentação do escritório"
       style={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '100svh',
         backgroundColor: 'var(--color-brand-dark)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingBottom: 'clamp(4rem, 8vw, 6rem)',
+        paddingTop: '7rem',
+        paddingBottom: 'clamp(5rem, 9vw, 7.5rem)',
+        overflow: 'hidden',
       }}
     >
       {/* Full-bleed background image */}
@@ -39,28 +42,36 @@ export function Hero() {
         loading="eager"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 0.75, scale: 1 }}
-        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 0.82, scale: 1 }}
+        transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* Gradient: transparent top → dark bottom */}
+      {/* Overlay — keeps image alive up top, anchors text at bottom */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(to bottom, transparent 20%, rgba(26,20,16,0.55) 52%, rgba(26,20,16,0.96) 82%, var(--color-brand-dark) 100%)',
+          background:
+            'linear-gradient(to bottom, rgba(21,16,11,0.55) 0%, rgba(21,16,11,0.18) 30%, rgba(21,16,11,0.45) 60%, rgba(21,16,11,0.92) 88%, var(--color-brand-dark) 100%)',
         }}
+        aria-hidden="true"
+      />
+      {/* Subtle left vignette for extra headline legibility */}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(to right, rgba(21,16,11,0.5) 0%, transparent 55%)' }}
+        aria-hidden="true"
       />
 
       {/* Content */}
       <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Label */}
+        {/* Eyebrow */}
         <motion.p
-          className="text-caption"
-          style={{ color: 'rgba(240,234,224,0.55)', marginBottom: '1.75rem' }}
+          className="eyebrow"
+          style={{ color: 'rgba(244,238,228,0.75)', marginBottom: '2rem' }}
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
         >
           Joinville, SC · Miami, FL · Desde 2016
         </motion.p>
@@ -68,10 +79,10 @@ export function Hero() {
         {/* Headline */}
         <h1
           className="text-display-xl"
-          style={{ color: 'var(--color-brand-cream)', marginBottom: '1.5rem' }}
+          style={{ color: 'var(--color-brand-cream)', marginBottom: '2rem', maxWidth: '16ch' }}
           aria-label="Arquitetura que o seu cérebro vai lembrar."
         >
-          {['Arquitetura que', 'o seu cérebro', 'vai'].map((line, i) => (
+          {['Arquitetura que', 'o seu cérebro vai'].map((line, i) => (
             <motion.span
               key={i}
               custom={i}
@@ -85,7 +96,7 @@ export function Hero() {
             </motion.span>
           ))}
           <motion.span
-            custom={3}
+            custom={2}
             variants={lineVariants}
             initial="hidden"
             animate="visible"
@@ -100,119 +111,95 @@ export function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          style={{ color: 'rgba(240,234,224,0.6)', fontSize: '1rem', lineHeight: 1.75, maxWidth: '38rem', marginBottom: '2.5rem' }}
+          className="lead"
+          style={{ color: 'rgba(244,238,228,0.82)', maxWidth: '40rem', marginBottom: '2.75rem' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.95 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
         >
-          Projetos residenciais e comerciais de alto padrão — do conceito à entrega.
-          Método 4H+ exclusivo. Presença em 11 estados e Miami, FL.
+          Projetos residenciais e comerciais de alto padrão — do conceito à entrega, guiados pelo
+          Método&nbsp;4H+ de neuroarquitetura. Presença em 11 estados e em Miami, FL.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap items-center gap-4"
-          style={{ marginBottom: '3rem' }}
-          initial={{ opacity: 0, y: 10 }}
+          className="flex flex-col sm:flex-row sm:items-center gap-4"
+          style={{ marginBottom: 'clamp(3rem, 6vw, 4.5rem)' }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.1 }}
+          transition={{ duration: 0.7, delay: 1.1 }}
         >
           <WhatsAppButton label="Iniciar projeto" variant="hero" />
-          <button
-            onClick={() => scrollTo('projetos')}
-            style={{
-              background: 'none',
-              border: '1px solid rgba(240,234,224,0.35)',
-              color: 'rgba(240,234,224,0.8)',
-              padding: '0.9375rem 1.75rem',
-              fontSize: '0.6875rem',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              fontWeight: 500,
-              cursor: 'pointer',
-              fontFamily: 'var(--font-body)',
-              transition: 'border-color 0.2s, color 0.2s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(240,234,224,0.7)'; e.currentTarget.style.color = '#F0EAE0'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(240,234,224,0.35)'; e.currentTarget.style.color = 'rgba(240,234,224,0.8)'; }}
-          >
+          <button onClick={() => scrollTo('projetos')} className="btn btn-outline-light btn-lg">
             Ver projetos
           </button>
         </motion.div>
 
         {/* Stats row */}
         <motion.div
-          style={{ paddingTop: '1.5rem', borderTop: '1px solid rgba(240,234,224,0.12)' }}
+          style={{ paddingTop: '2rem', borderTop: '1px solid rgba(244,238,228,0.16)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.3 }}
+          transition={{ duration: 0.7, delay: 1.3 }}
         >
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0', alignItems: 'stretch' }}>
-            {METRICS.map(([value, label], i) => (
-              <div key={label} style={{ display: 'flex', alignItems: 'stretch' }}>
-                {i > 0 && (
-                  <div
-                    style={{ width: '1px', backgroundColor: 'rgba(240,234,224,0.12)', margin: '0 2rem', alignSelf: 'stretch' }}
-                    aria-hidden="true"
-                  />
-                )}
-                <div style={{ paddingTop: '0.75rem' }}>
-                  <p style={{
+          <dl className="grid grid-cols-2 md:grid-cols-4 gap-y-7 gap-x-6">
+            {METRICS.map(([value, label]) => (
+              <div key={label} style={{ borderLeft: '1px solid rgba(244,238,228,0.16)', paddingLeft: '1.25rem' }}>
+                <dt
+                  style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: '1.625rem',
+                    fontSize: 'clamp(2rem, 3vw, 2.75rem)',
                     lineHeight: 1,
                     fontWeight: 300,
                     color: 'var(--color-brand-cream)',
-                    letterSpacing: '-0.01em',
-                  }}>
-                    {value}
-                  </p>
-                  <p style={{
-                    fontSize: '0.5625rem',
-                    letterSpacing: '0.16em',
+                    letterSpacing: '-0.02em',
+                  }}
+                >
+                  {value}
+                </dt>
+                <dd
+                  style={{
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.14em',
                     textTransform: 'uppercase',
-                    color: 'rgba(240,234,224,0.38)',
-                    marginTop: '0.25rem',
+                    color: 'rgba(244,238,228,0.6)',
+                    marginTop: '0.625rem',
                     fontWeight: 500,
-                  }}>
-                    {label}
-                  </p>
-                </div>
+                  }}
+                >
+                  {label}
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </motion.div>
       </div>
 
-      {/* Scroll indicator — bottom right, vertical line + text */}
+      {/* Scroll indicator */}
       <motion.div
-        className="absolute hidden lg:flex flex-col items-center gap-2"
-        style={{ bottom: 'clamp(4rem, 8vw, 6rem)', right: '2rem', zIndex: 2 }}
+        className="absolute hidden lg:flex flex-col items-center gap-3"
+        style={{ bottom: 'clamp(3rem, 6vw, 5rem)', right: '2.5rem', zIndex: 2 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.6 }}
         aria-hidden="true"
       >
-        <span style={{
-          writingMode: 'vertical-rl',
-          fontSize: '0.4375rem',
-          letterSpacing: '0.22em',
-          textTransform: 'uppercase',
-          color: 'rgba(240,234,224,0.28)',
-          fontWeight: 500,
-          fontFamily: 'var(--font-body)',
-        }}>
+        <span
+          style={{
+            writingMode: 'vertical-rl',
+            fontSize: '0.625rem',
+            letterSpacing: '0.28em',
+            textTransform: 'uppercase',
+            color: 'rgba(244,238,228,0.5)',
+            fontWeight: 600,
+          }}
+        >
           scroll
         </span>
         <motion.div
-          animate={{ scaleY: [0.3, 1, 0.3], opacity: [0.2, 0.55, 0.2] }}
+          animate={{ scaleY: [0.3, 1, 0.3], opacity: [0.25, 0.7, 0.25] }}
           transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
-          style={{
-            width: '1px',
-            height: '2.5rem',
-            backgroundColor: 'var(--color-brand-gold)',
-            transformOrigin: 'top',
-          }}
+          style={{ width: '1px', height: '3rem', backgroundColor: 'var(--color-brand-gold)', transformOrigin: 'top' }}
         />
       </motion.div>
     </section>
