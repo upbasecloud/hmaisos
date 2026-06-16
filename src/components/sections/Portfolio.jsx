@@ -19,24 +19,34 @@ export function Portfolio() {
     [filtered, mostrarTodos]
   );
 
-  const [featured, ...rest] = visible;
-
   return (
-    <section id="projetos" className="section-padding curve-top" style={{ backgroundColor: 'var(--color-brand-bg)' }} aria-label="Portfólio de projetos">
+    <section
+      id="projetos"
+      className="section-padding curve-top"
+      style={{ backgroundColor: 'var(--color-brand-bg)', overflow: 'hidden' }}
+      aria-label="Portfólio de projetos"
+    >
       <div className="container-site">
+        {/* Header — centered */}
         <RevealOnScroll>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-            <div>
-              <p className="eyebrow" style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.25rem' }}>
-                Portfólio
-              </p>
-              <h2 className="text-display-md" style={{ color: 'var(--color-brand-text)' }}>
-                Projetos entregues
-              </h2>
-            </div>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 3.5vw, 3rem)' }}>
+            <p
+              className="eyebrow"
+              style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.125rem', justifyContent: 'center' }}
+            >
+              Portfólio
+            </p>
+            <h2 className="text-display-md" style={{ color: 'var(--color-brand-text)' }}>
+              Projetos entregues
+            </h2>
 
-            {/* Filtros */}
-            <div className="flex gap-7 sm:gap-9 flex-wrap" role="group" aria-label="Filtrar por categoria">
+            {/* Filter tabs — centered below title */}
+            <div
+              className="flex gap-7 sm:gap-8 flex-wrap justify-center"
+              role="group"
+              aria-label="Filtrar por categoria"
+              style={{ marginTop: 'clamp(1.75rem, 3vw, 2.5rem)' }}
+            >
               {categorias.map((cat) => (
                 <button
                   key={cat}
@@ -44,15 +54,15 @@ export function Portfolio() {
                   aria-pressed={filtro === cat}
                   className="relative transition-colors duration-200"
                   style={{
-                    color: filtro === cat ? 'var(--color-brand-text)' : 'var(--color-brand-text-2)',
-                    fontSize: '0.8125rem',
-                    letterSpacing: '0.1em',
+                    color: filtro === cat ? 'var(--color-brand-gold)' : 'var(--color-brand-text-2)',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.12em',
                     fontWeight: 600,
                     textTransform: 'uppercase',
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    padding: '0 0 0.625rem 0',
+                    padding: '0 0 0.5rem 0',
                   }}
                 >
                   {cat}
@@ -70,36 +80,27 @@ export function Portfolio() {
           </div>
         </RevealOnScroll>
 
-        <hr className="rule" style={{ marginBottom: '3.5rem' }} />
-
         <AnimatePresence mode="wait">
           <motion.div
             key={filtro}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.22 }}
           >
-            {/* Featured project — full width */}
-            {featured && (
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-12 lg:mb-16"
-              >
-                <ProjectCard projeto={featured} aspect="16 / 9" featured />
-              </motion.div>
-            )}
-
-            {/* Rest — responsive editorial grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-12 lg:gap-y-16">
-              {rest.map((p, i) => (
+            {/* Uniform 4:3 grid */}
+            <div className="pf-grid">
+              {visible.map((p, i) => (
                 <motion.div
                   key={p.slug}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: 0.5,
+                    delay: Math.min(i, 6) * 0.05,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="pf-cell"
                 >
                   <ProjectCard projeto={p} aspect="4 / 3" />
                 </motion.div>
@@ -108,18 +109,21 @@ export function Portfolio() {
           </motion.div>
         </AnimatePresence>
 
+        {/* Load more — centered */}
         {filtered.length > INITIAL_COUNT && !mostrarTodos && (
           <RevealOnScroll>
-            <div className="mt-16 pt-12 flex justify-center" style={{ borderTop: '1px solid var(--color-brand-line)' }}>
+            <div
+              style={{
+                marginTop: 'clamp(3.5rem, 6vw, 5.5rem)',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               <button
                 onClick={() => setMostrarTodos(true)}
-                className="group flex items-center gap-3 transition-colors duration-200"
-                style={{ fontSize: '0.8125rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-text)' }}
+                className="pf-outline-btn"
               >
-                Explorar portfólio completo
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover:translate-x-1 transition-transform duration-200" style={{ width: '1rem', height: '1rem' }}>
-                  <path d="M3 8h10M9 4l4 4-4 4" />
-                </svg>
+                Ver todos os projetos
               </button>
             </div>
           </RevealOnScroll>

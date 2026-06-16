@@ -47,26 +47,79 @@ const FAQS = [
 
 export function FAQ() {
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--color-brand-bg)' }} aria-label="Perguntas frequentes">
+    <section
+      className="section-padding"
+      style={{ backgroundColor: 'var(--color-brand-bg)' }}
+      aria-label="Perguntas frequentes"
+    >
       <div className="container-site">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20 xl:gap-28">
+
+          {/* Left — sticky label block */}
           <RevealOnScroll>
-            <div className="lg:sticky lg:top-28">
+            <div className="lg:sticky lg:top-24">
               <p className="eyebrow" style={{ color: 'var(--color-brand-accent-ink)', marginBottom: '1.25rem' }}>
                 Dúvidas comuns
               </p>
-              <h2 className="text-display-md mb-6" style={{ color: 'var(--color-brand-text)' }}>
+              <h2
+                className="text-display-md"
+                style={{ color: 'var(--color-brand-text)', marginBottom: '1.25rem' }}
+              >
                 Perguntas frequentes
               </h2>
-              <p className="body-text mb-8" style={{ color: 'var(--color-brand-text-2)', maxWidth: '24rem' }}>
+              <p
+                className="body-text"
+                style={{ color: 'var(--color-brand-text-2)', maxWidth: '22rem', marginBottom: '2.25rem' }}
+              >
                 Não encontrou o que buscava? Fale diretamente com a nossa equipe — respondemos em até 24h.
               </p>
               <WhatsAppButton label="Falar com especialista" variant="outline-dark" />
+
+              {/* Accent stat block */}
+              <div
+                style={{
+                  marginTop: '2.75rem',
+                  paddingTop: '2rem',
+                  borderTop: '1px solid var(--color-brand-line)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem',
+                }}
+              >
+                {[
+                  ['+847', 'projetos entregues'],
+                  ['11 estados', 'atendidos'],
+                  ['48h', 'para receber sua proposta'],
+                ].map(([value, label]) => (
+                  <div key={label}>
+                    <p
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        fontSize: 'clamp(1.5rem, 2.2vw, 1.875rem)',
+                        lineHeight: 1,
+                        fontWeight: 300,
+                        color: 'var(--color-brand-text)',
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      {value}
+                    </p>
+                    <p className="text-caption" style={{ color: 'var(--color-brand-text-2)', marginTop: '0.375rem' }}>
+                      {label}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </RevealOnScroll>
 
+          {/* Right — accordion list */}
           <RevealOnScroll>
-            <div role="list" aria-label="Lista de perguntas frequentes">
+            <div
+              role="list"
+              aria-label="Lista de perguntas frequentes"
+              style={{ borderTop: '1px solid var(--color-brand-line)' }}
+            >
               {FAQS.map((faq, i) => (
                 <AccordionItem key={i} pergunta={faq.pergunta} resposta={faq.resposta} index={i} />
               ))}

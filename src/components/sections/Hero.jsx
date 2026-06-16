@@ -23,6 +23,7 @@ export function Hero() {
   return (
     <section
       aria-label="Apresentação do escritório"
+      data-dark-section
       style={{
         position: 'relative',
         minHeight: '100svh',
@@ -30,8 +31,8 @@ export function Hero() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        paddingTop: '7rem',
-        paddingBottom: 'clamp(5rem, 9vw, 7.5rem)',
+        paddingTop: '8rem',
+        paddingBottom: 'clamp(4.5rem, 8vw, 7rem)',
         overflow: 'hidden',
       }}
     >
@@ -47,19 +48,19 @@ export function Hero() {
         transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* Overlay — keeps image alive up top, anchors text at bottom */}
+      {/* Overlay — graduated to keep image visible mid-frame, solid at bottom */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(to bottom, rgba(21,16,11,0.55) 0%, rgba(21,16,11,0.18) 30%, rgba(21,16,11,0.45) 60%, rgba(21,16,11,0.92) 88%, var(--color-brand-dark) 100%)',
+            'linear-gradient(to bottom, rgba(21,16,11,0.52) 0%, rgba(21,16,11,0.12) 28%, rgba(21,16,11,0.38) 58%, rgba(21,16,11,0.88) 84%, var(--color-brand-dark) 100%)',
         }}
         aria-hidden="true"
       />
-      {/* Subtle left vignette for extra headline legibility */}
+      {/* Left vignette for headline legibility */}
       <div
         className="absolute inset-0"
-        style={{ background: 'linear-gradient(to right, rgba(21,16,11,0.5) 0%, transparent 55%)' }}
+        style={{ background: 'linear-gradient(to right, rgba(21,16,11,0.48) 0%, transparent 52%)' }}
         aria-hidden="true"
       />
 
@@ -137,18 +138,25 @@ export function Hero() {
 
         {/* Stats row */}
         <motion.div
-          style={{ paddingTop: '2rem', borderTop: '1px solid rgba(244,238,228,0.16)' }}
+          style={{ paddingTop: '1.75rem', borderTop: '1px solid rgba(244,238,228,0.14)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.3 }}
         >
-          <dl className="grid grid-cols-2 md:grid-cols-4 gap-y-7 gap-x-6">
-            {METRICS.map(([value, label]) => (
-              <div key={label} style={{ borderLeft: '1px solid rgba(244,238,228,0.16)', paddingLeft: '1.25rem' }}>
+          <dl className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-0">
+            {METRICS.map(([value, label], i) => (
+              <div
+                key={label}
+                style={{
+                  paddingLeft: '1.5rem',
+                  paddingRight: '1rem',
+                  borderLeft: '1px solid rgba(244,238,228,0.13)',
+                }}
+              >
                 <dt
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(2rem, 3vw, 2.75rem)',
+                    fontSize: 'clamp(1.875rem, 2.8vw, 2.5rem)',
                     lineHeight: 1,
                     fontWeight: 300,
                     color: 'var(--color-brand-cream)',
@@ -159,11 +167,11 @@ export function Hero() {
                 </dt>
                 <dd
                   style={{
-                    fontSize: '0.75rem',
+                    fontSize: '0.6875rem',
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
-                    color: 'rgba(244,238,228,0.6)',
-                    marginTop: '0.625rem',
+                    color: 'rgba(244,238,228,0.56)',
+                    marginTop: '0.5rem',
                     fontWeight: 500,
                   }}
                 >

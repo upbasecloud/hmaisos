@@ -12,15 +12,26 @@ const LINKS = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [overDark, setOverDark] = useState(true); // hero is dark on mount
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
   const menuRef = useRef(null);
 
-  const solid = scrolled && !menuOpen;
-  const onDark = !solid; // cream text when transparent/over dark
-
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 64);
+    const NAV_H = 80;
+    const checkDark = () => {
+      const darkEls = document.querySelectorAll('[data-dark-section]');
+      let found = false;
+      darkEls.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= NAV_H && r.bottom > NAV_H * 0.5) found = true;
+      });
+      setOverDark(found);
+    };
+    const onScroll = () => {
+      setScrolled(window.scrollY > 64);
+      checkDark();
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -59,40 +70,65 @@ export function Navbar() {
     }
   };
 
+  const onDark = overDark || menuOpen;
+  const showSolid = scrolled && !overDark && !menuOpen;
+
   const linkColor = onDark ? 'rgba(244,238,228,0.78)' : 'var(--color-brand-text-2)';
   const linkHover = onDark ? 'var(--color-brand-cream)' : 'var(--color-brand-text)';
 
   return (
     <header
       role="banner"
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50"
       style={{
-        backgroundColor: solid ? 'rgba(247,242,234,0.88)' : 'transparent',
-        backdropFilter: solid ? 'blur(14px)' : 'none',
-        WebkitBackdropFilter: solid ? 'blur(14px)' : 'none',
-        borderBottom: solid ? '1px solid var(--color-brand-line)' : '1px solid transparent',
+        transition: 'background-color 0.35s, border-color 0.35s, backdrop-filter 0.35s',
+        backgroundColor: showSolid ? 'rgba(247,242,234,0.9)' : 'transparent',
+        backdropFilter: showSolid ? 'blur(16px)' : 'none',
+        WebkitBackdropFilter: showSolid ? 'blur(16px)' : 'none',
+        borderBottom: showSolid ? '1px solid var(--color-brand-line)' : '1px solid transparent',
       }}
     >
       <nav
         className="container-site flex items-center justify-between"
-        style={{ height: '4.75rem' }}
+        style={{ height: '4.5rem' }}
         role="navigation"
         aria-label="Navegação principal"
       >
         {/* Logo */}
-        <Link to="/" aria-label="H+ Arquitetura & Co — página inicial" className="flex items-center gap-3 flex-shrink-0">
+        <Link
+          to="/"
+          aria-label="H+ Arquitetura & Co — página inicial"
+          className="flex items-center gap-3 flex-shrink-0"
+        >
           <img
             src="/images/brand/logo.png"
             alt=""
             className="object-contain"
-            style={{ height: '2.25rem', width: '2.25rem', filter: onDark ? 'brightness(0) invert(1)' : 'none' }}
+            style={{
+              height: '2rem',
+              width: '2rem',
+              filter: onDark ? 'brightness(0) invert(1)' : 'none',
+              transition: 'filter 0.35s',
+            }}
           />
           <span
             className="font-display font-normal hidden sm:block"
-            style={{ fontSize: '1.0625rem', letterSpacing: '0.04em', color: onDark ? 'var(--color-brand-cream)' : 'var(--color-brand-text)' }}
+            style={{
+              fontSize: '1rem',
+              letterSpacing: '0.04em',
+              color: onDark ? 'var(--color-brand-cream)' : 'var(--color-brand-text)',
+              transition: 'color 0.35s',
+            }}
           >
             H<span style={{ color: 'var(--color-brand-bronze)' }}>+</span>{' '}
-            <span style={{ color: onDark ? 'rgba(244,238,228,0.7)' : 'var(--color-brand-text-2)' }}>Arquitetura&nbsp;&amp;&nbsp;Co</span>
+            <span
+              style={{
+                color: onDark ? 'rgba(244,238,228,0.65)' : 'var(--color-brand-text-2)',
+                transition: 'color 0.35s',
+              }}
+            >
+              Arquitetura&nbsp;&amp;&nbsp;Co
+            </span>
           </span>
         </Link>
 
@@ -104,7 +140,13 @@ export function Navbar() {
               href={href}
               onClick={(e) => handleAnchorClick(e, href)}
               className="transition-colors duration-200"
-              style={{ fontSize: '0.75rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600, color: linkColor }}
+              style={{
+                fontSize: '0.6875rem',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                fontWeight: 600,
+                color: linkColor,
+              }}
               onMouseEnter={(e) => (e.currentTarget.style.color = linkHover)}
               onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
             >
@@ -115,21 +157,48 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:block">
-          <WhatsAppButton label="Iniciar projeto" variant={onDark ? 'outline-light' : 'outline-dark'} />
+          <WhatsAppButton
+            label="Iniciar projeto"
+            variant={onDark ? 'outline-light' : 'outline-dark'}
+          />
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden flex flex-col gap-1.5 p-2"
+          className="lg:hidden flex flex-col justify-center gap-1.5 p-2"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           style={{ color: menuOpen || onDark ? 'var(--color-brand-cream)' : 'var(--color-brand-text)' }}
         >
-          <span className="block h-px bg-current transition-all duration-300" style={{ width: '1.5rem', transform: menuOpen ? 'rotate(45deg) translateY(8px)' : 'none' }} />
-          <span className="block h-px bg-current transition-all duration-300" style={{ width: '1rem', opacity: menuOpen ? 0 : 1 }} />
-          <span className="block h-px bg-current transition-all duration-300" style={{ width: '1.5rem', transform: menuOpen ? 'rotate(-45deg) translateY(-8px)' : 'none' }} />
+          <span
+            className="block bg-current"
+            style={{
+              width: '1.375rem',
+              height: '1px',
+              transition: 'transform 0.3s',
+              transform: menuOpen ? 'rotate(45deg) translateY(7px)' : 'none',
+            }}
+          />
+          <span
+            className="block bg-current"
+            style={{
+              width: '0.875rem',
+              height: '1px',
+              transition: 'opacity 0.3s',
+              opacity: menuOpen ? 0 : 1,
+            }}
+          />
+          <span
+            className="block bg-current"
+            style={{
+              width: '1.375rem',
+              height: '1px',
+              transition: 'transform 0.3s',
+              transform: menuOpen ? 'rotate(-45deg) translateY(-7px)' : 'none',
+            }}
+          />
         </button>
       </nav>
 
@@ -144,16 +213,16 @@ export function Navbar() {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 flex flex-col px-8 pt-28 pb-12"
-            style={{ backgroundColor: 'var(--color-brand-dark)' }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 flex flex-col px-8 pb-12"
+            style={{ backgroundColor: 'var(--color-brand-dark)', paddingTop: '6rem' }}
           >
             {LINKS.map(({ label, href }, i) => (
               <motion.a
                 key={label}
                 href={href}
                 onClick={(e) => handleAnchorClick(e, href)}
-                className="font-display transition-colors duration-200 pb-7"
+                className="font-display transition-colors duration-200"
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2.25rem, 9vw, 2.75rem)',
@@ -161,17 +230,24 @@ export function Navbar() {
                   letterSpacing: '-0.02em',
                   color: 'var(--color-brand-cream)',
                   borderBottom: '1px solid var(--color-brand-line-dark)',
-                  marginBottom: '0.75rem',
+                  paddingBottom: '1.5rem',
+                  marginBottom: '0.5rem',
                   textDecoration: 'none',
+                  display: 'block',
                 }}
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.08 + i * 0.06 }}
+                transition={{ duration: 0.3, delay: 0.06 + i * 0.06 }}
               >
                 {label}
               </motion.a>
             ))}
-            <motion.div className="mt-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.34 }}>
+            <motion.div
+              className="mt-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.32 }}
+            >
               <WhatsAppButton label="Iniciar projeto" variant="cta" />
             </motion.div>
           </motion.div>

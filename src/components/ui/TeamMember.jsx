@@ -2,35 +2,50 @@ import { motion } from 'framer-motion';
 
 export function TeamMember({ membro }) {
   return (
-    <motion.div className="cursor-default" initial="idle" whileHover="hovered">
+    <motion.div
+      className="cursor-default"
+      initial="idle"
+      whileHover="hovered"
+      style={{ display: 'block' }}
+    >
+      {/* Photo — always isolated with overflow:hidden, no pseudo-elements inside */}
       <div
-        className="relative overflow-hidden mb-4"
-        style={{ aspectRatio: '3 / 4', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-brand-bg-alt)' }}
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          aspectRatio: '3 / 4',
+          borderRadius: 'var(--radius-md)',
+          backgroundColor: 'var(--color-brand-bg-alt)',
+          marginBottom: '0.875rem',
+        }}
       >
         <motion.img
           src={membro.foto}
           alt={`${membro.nome} — ${membro.cargo}`}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'top',
+          }}
           variants={{
-            idle: { filter: 'grayscale(70%) contrast(1.02)', scale: 1 },
+            idle: { filter: 'grayscale(65%) contrast(1.02)', scale: 1 },
             hovered: { filter: 'grayscale(0%)', scale: 1.04 },
           }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        />
-        <span
-          className="absolute inset-0 pointer-events-none"
-          style={{ boxShadow: 'inset 0 0 0 1px rgba(34,27,20,0.06)', borderRadius: 'var(--radius-md)' }}
-          aria-hidden="true"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         />
       </div>
+
       <p
-        className="font-display leading-tight"
         style={{
           fontFamily: 'var(--font-display)',
-          fontSize: '1.1875rem',
+          fontSize: '1.125rem',
           fontWeight: 500,
+          lineHeight: 1.25,
           color: 'var(--color-brand-text)',
           marginBottom: '0.25rem',
         }}
@@ -39,10 +54,10 @@ export function TeamMember({ membro }) {
       </p>
       <p
         style={{
-          fontSize: '0.875rem',
-          lineHeight: 1.45,
+          fontSize: '0.8125rem',
+          lineHeight: 1.5,
           color: 'var(--color-brand-text-2)',
-          fontWeight: 500,
+          fontWeight: 400,
         }}
       >
         {membro.cargo}
